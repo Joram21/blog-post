@@ -3,7 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
-from app import config
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -11,7 +15,7 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('app.config.config')
+    app.config.from_object('app.config.Config')
     app.config.from_pyfile('../instance/config.py', silent=True)
 
     db.init_app(app)
